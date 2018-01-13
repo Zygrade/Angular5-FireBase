@@ -1,0 +1,38 @@
+<div *ngIf = "items_property?.length > 0 ; else emptyList">
+
+  <ul class="collection" *ngFor="let item of items_property">
+
+    <li class="collection-item"><strong> {{item.title}} : </strong> {{item.description}}
+      <a href="#" class="secondary-content">
+        <i (click)="editItem($event, item)" class="fa fa-pencil"></i>
+        <i *ngIf = "editState && itemToEdit.id == item.id" (click)="clearState()" class="fa fa-compress"></i>
+      </a>
+
+      <div *ngIf = "editState && itemToEdit.id == item.id">
+        <form (ngSubmit) = "updateItem(item)">
+          <div class="row">
+
+            <div class="input-field col s6">
+              <input type="text" name="title" placeholder="Add Title..." [(ngModel)]="item.title">
+
+            </div>
+
+            <div class="input-field col s6">
+              <input type="text" name="description" placeholder="Add Description..." [(ngModel)]="item.description">
+
+            </div>
+
+          </div>
+
+          <input type="submit" name="Update" value="Update" class="btn green">
+          <button type="button" name="button" class="btn red" (click)="deleteItem($event,item)">Delete</button>
+        </form>
+      </div>
+
+    </li>
+  </ul>
+</div>
+
+<ng-template #emptyList>
+  <h3> The list is empty ! </h3>
+</ng-template>
